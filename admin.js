@@ -1,4 +1,4 @@
-const API_URL = 'https://script.google.com/macros/s/AKfycbwtRTG8R8gndQNv68lyVCE-5xyE4yIgBi5QJove9bGYhvHvMuP1Ek_-P3Eev9vH_zfZ/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbzxxqPyta0Vz6OtBQlmWE9XO71MNh7EuVnZHsblZEt1vsYp73MlpVBBiBOJulBuITgf/exec';
 let config = null;
 let rsvps = [];
 const $=id=>document.getElementById(id);
