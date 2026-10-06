@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wedding Admin</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{rose:"#581825",gold:"#D4AF37",ivory:"#FFFDF9",charcoal:"#2D3748"},fontFamily:{display:["Playfair Display","serif"],script:["Great Vibes","cursive"]}}}};
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<style>body{font-family:Inter,sans-serif;background:#FFFDF9}.goldline{height:1px;background:linear-gradient(90deg,transparent,#D4AF37,transparent)}</style>
+</head>
+<body class="text-charcoal">
+<div id="login" class="min-h-screen bg-rose px-5 py-10 flex items-center justify-center">
+  <form id="loginForm" class="w-full max-w-md rounded-3xl bg-white p-8 shadow-2xl">
+    <p class="text-xs uppercase tracking-[.3em] text-gold">Private area</p>
+    <h1 class="mt-2 font-display text-4xl text-rose">Wedding Admin</h1>
+    <p class="mt-3 text-sm text-gray-500">Sign in to manage invitations and RSVPs.</p>
+    <input id="password" type="password" required placeholder="Admin password" class="mt-7 w-full rounded-xl border px-4 py-3">
+    <button class="mt-4 w-full rounded-xl bg-rose px-4 py-3 font-semibold text-white">Sign In</button>
+    <p id="loginError" class="mt-3 hidden text-sm text-red-600">Incorrect password.</p>
+  </form>
+</div>
+
+<div id="app" class="hidden min-h-screen">
+<header class="border-b bg-white">
+ <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-5">
+  <div><p class="font-script text-3xl text-gold">Aisha & Hamza</p><p class="text-xs uppercase tracking-[.2em] text-gray-500">Invitation Control Center</p></div>
+  <button id="logout" class="rounded-full border px-4 py-2 text-sm">Logout</button>
+ </div>
+</header>
+<main class="mx-auto max-w-7xl px-5 py-8">
+ <section class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  <div class="rounded-2xl bg-rose p-5 text-white"><p class="text-sm text-white/70">Invitations Generated</p><p id="mInvites" class="mt-2 text-3xl font-bold">0</p></div>
+  <div class="rounded-2xl border bg-white p-5"><p class="text-sm text-gray-500">Confirmed</p><p id="mConfirmed" class="mt-2 text-3xl font-bold text-rose">0</p></div>
+  <div class="rounded-2xl border bg-white p-5"><p class="text-sm text-gray-500">Declined</p><p id="mDeclined" class="mt-2 text-3xl font-bold">0</p></div>
+  <div class="rounded-2xl border bg-white p-5"><p class="text-sm text-gray-500">Headcount</p><p id="mHeadcount" class="mt-2 text-3xl font-bold text-rose">0</p></div>
+ </section>
+
+ <section class="mt-8 grid gap-8 lg:grid-cols-[.85fr_1.15fr]">
+  <div class="rounded-3xl border bg-white p-6 shadow-sm">
+   <p class="text-xs uppercase tracking-[.25em] text-gold">New invitation</p>
+   <h2 class="mt-2 font-display text-3xl text-rose">Generate Guest Link</h2>
+   <label class="mt-6 block text-sm font-semibold">Guest Name<input id="guest" class="mt-2 w-full rounded-xl border px-4 py-3" placeholder="Mehria & Family"></label>
+   <label class="mt-4 block text-sm font-semibold">WhatsApp Number<input id="phone" inputmode="numeric" class="mt-2 w-full rounded-xl border px-4 py-3" placeholder="923001234567"></label>
+   <label class="mt-4 block text-sm font-semibold">Message Template
+    <select id="template" class="mt-2 w-full rounded-xl border px-4 py-3"><option value="formal">Formal</option><option value="casual">Casual</option><option value="family">Family</option></select>
+   </label>
+   <div class="mt-5 rounded-xl bg-[#faf5ef] p-4"><p class="text-xs text-gray-500">Generated URL</p><input id="link" readonly class="mt-2 w-full bg-transparent text-sm text-rose outline-none" value="—"></div>
+   <div class="mt-4 grid grid-cols-2 gap-3"><button id="generate" class="rounded-xl bg-rose px-4 py-3 font-semibold text-white">Generate Link</button><button id="copy" class="rounded-xl border px-4 py-3 font-semibold">Copy Link</button></div>
+   <button id="whatsapp" class="mt-3 w-full rounded-xl bg-green-600 px-4 py-3 font-semibold text-white">Send via WhatsApp</button>
+  </div>
+
+  <div class="rounded-3xl border bg-white p-6 shadow-sm">
+   <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div><p class="text-xs uppercase tracking-[.25em] text-gold">Responses</p><h2 class="mt-2 font-display text-3xl text-rose">RSVP Dashboard</h2></div>
+    <button id="csv" class="rounded-xl border border-rose px-4 py-2 text-sm font-semibold text-rose">Export CSV</button>
+   </div>
+   <div class="mt-5 flex gap-3"><input id="search" class="w-full rounded-xl border px-4 py-3" placeholder="Search guests..."><select id="filter" class="rounded-xl border px-3 py-3"><option value="All">All</option><option value="Confirmed">Confirmed</option><option value="Declined">Declined</option></select></div>
+   <div class="mt-5 overflow-x-auto"><table class="w-full min-w-[680px] text-left text-sm"><thead><tr class="border-b text-xs uppercase text-gray-500"><th class="px-3 py-3">Guest</th><th class="px-3 py-3">Status</th><th class="px-3 py-3">Guests</th><th class="px-3 py-3">Notes</th><th class="px-3 py-3">Time</th></tr></thead><tbody id="rows"></tbody></table></div>
+ </div>
+ </section>
+</main>
+</div>
+<script>
+const CONFIG={apiUrl:"https://script.google.com/macros/s/AKfycbwtRTG8R8gndQNv68lyVCE-5xyE4yIgBi5QJoveb9GYhvHvMuP1Ek_-P3Eev9vH_zfZ/exec",siteUrl:location.origin+"/index.html",demoAdminPassword:"CHANGE-ME"};
+let rsvps=[], invites=Number(localStorage.getItem("wedding_invite_count")||0);
+const $=id=>document.getElementById(id);
+function showApp(){ $("login").classList.add("hidden");$("app").classList.remove("hidden");loadData(); }
+$("loginForm").onsubmit=e=>{e.preventDefault(); if($("password").value===CONFIG.demoAdminPassword){sessionStorage.admin="1";showApp()}else $("loginError").classList.remove("hidden")};
+$("logout").onclick=()=>{sessionStorage.removeItem("admin");location.reload()};
+if(sessionStorage.admin==="1")showApp();
+
+async function loadData(){
+  rsvps=JSON.parse(localStorage.getItem("wedding_rsvps")||"[]");
+  if(CONFIG.apiUrl){try{const res=await fetch(CONFIG.apiUrl+"?action=list");const data=await res.json();if(Array.isArray(data.rsvps))rsvps=data.rsvps;}catch(e){}}
+  render();
+}
+function render(){
+ $("mInvites").textContent=invites;
+ $("mConfirmed").textContent=rsvps.filter(x=>x.status==="Confirmed").length;
+ $("mDeclined").textContent=rsvps.filter(x=>x.status==="Declined").length;
+ $("mHeadcount").textContent=rsvps.filter(x=>x.status==="Confirmed").reduce((a,x)=>a+Number(x.attendees||0),0);
+ const q=$("search").value.toLowerCase(), f=$("filter").value;
+ const list=rsvps.filter(x=>(f==="All"||x.status===f)&&String(x.guestName).toLowerCase().includes(q));
+ $("rows").innerHTML=list.map(x=>`<tr class="border-b"><td class="px-3 py-3 font-semibold">${esc(x.guestName)}</td><td class="px-3 py-3">${esc(x.status)}</td><td class="px-3 py-3">${x.attendees||0}</td><td class="px-3 py-3">${esc(x.notes||"—")}</td><td class="px-3 py-3 whitespace-nowrap">${new Date(x.timestamp).toLocaleString()}</td></tr>`).join("")||`<tr><td colspan="5" class="px-3 py-8 text-center text-gray-400">No RSVP responses yet.</td></tr>`;
+}
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function makeLink(){const g=$("guest").value.trim();if(!g){alert("Enter guest name.");return null}const base=CONFIG.siteUrl||location.origin+"/index.html";return base+"?guest="+encodeURIComponent(g)}
+$("generate").onclick=()=>{const link=makeLink();if(!link)return;$("link").value=link;invites++;localStorage.setItem("wedding_invite_count",invites);render()};
+$("copy").onclick=async()=>{if($("link").value==="—"){$("generate").click();}try{await navigator.clipboard.writeText($("link").value);alert("Link copied!")}catch{alert("Copy failed; select and copy the link manually.")}};
+$("whatsapp").onclick=()=>{const link=makeLink();if(!link)return;$("link").value=link;const g=$("guest").value.trim(),p=$("phone").value.replace(/\D/g,"");const templates={
+formal:`Dear ${g},\n\nIt is our pleasure to invite you to the wedding celebration of Aisha & Hamza.\n\nPlease find your personalized invitation here:\n${link}\n\nWe would be honoured by your presence.`
+,casual:`Hi ${g}! 💍✨\nAisha & Hamza are getting married!\nYour personal invitation is here:\n${link}\nCan’t wait to celebrate with you!`
+,family:`Assalam-o-Alaikum ${g},\n\nWith great joy, our family invites you to Aisha & Hamza’s wedding celebrations.\nYour personalized invitation:\n${link}\n\nYour presence and prayers mean a lot to us.`
+}; const url="https://wa.me/"+p+"?text="+encodeURIComponent(templates[$("template").value]);open(url,"_blank","noopener")};
+$("search").oninput=render;$("filter").onchange=render;
+$("csv").onclick=()=>{const header=["Guest Name","Status","Attendees","Notes","Timestamp"];const data=rsvps.map(x=>[x.guestName,x.status,x.attendees,x.notes,new Date(x.timestamp).toISOString()]);const csv=[header,...data].map(row=>row.map(v=>`"${String(v??"").replaceAll('"','""')}"`).join(",")).join("\n");const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="wedding-rsvps.csv";a.click();URL.revokeObjectURL(a.href)};
+</script>
+</body></html>
