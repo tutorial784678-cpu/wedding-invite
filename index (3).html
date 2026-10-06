@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#4c112a" />
+  <meta name="description" content="A cinematic wedding invitation." />
+  <title>Wedding Invitation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="is-locked">
+  <div id="opening" class="opening" aria-modal="true" role="dialog" aria-label="Wedding invitation opening">
+    <video id="openingVideo" class="opening__video" muted playsinline preload="auto" poster="assets/opening-poster.jpg">
+      <source src="assets/opening-animation.mp4" type="video/mp4" />
+    </video>
+    <div class="opening__veil"></div>
+    <div class="opening__sparkles" aria-hidden="true"></div>
+    <div class="opening__content">
+      <p class="eyebrow">A SPECIAL INVITATION FOR</p>
+      <div id="guestName" class="guest-name">Dear Guest</div>
+      <div class="envelope-card" aria-hidden="true">
+        <div class="envelope-card__shine"></div>
+        <div class="envelope-card__paper envelope-card__paper--top"></div>
+        <div class="envelope-card__paper envelope-card__paper--bottom"></div>
+        <div class="wax-seal" id="waxSeal" role="button" tabindex="0" aria-label="Open invitation">
+          <span class="wax-seal__monogram" id="sealInitials">HN</span>
+          <span class="wax-seal__ring"></span>
+        </div>
+      </div>
+      <p class="opening__hint">Tap the seal to open</p>
+      <button id="openButton" class="seal-button" type="button">
+        <span class="seal-button__shine"></span>
+        OPEN INVITATION
+      </button>
+      <p id="loadingState" class="loading-state">Preparing your invitation…</p>
+    </div>
+  </div>
+
+  <main id="invitation" class="invitation" aria-hidden="true">
+    <section class="hero section--full" id="home">
+      <video id="heroVideo" class="hero__video" muted loop autoplay playsinline preload="metadata" poster="assets/opening-poster.jpg">
+        <source src="assets/wedding-video.mp4" type="video/mp4" />
+      </video>
+      <div class="hero__overlay"></div>
+      <div class="hero__petals" aria-hidden="true"></div>
+      <div class="hero__content">
+        <p id="heroBismillah" class="arabic reveal-up">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
+        <p id="heroKicker" class="hero__kicker reveal-up">TOGETHER WITH THEIR FAMILIES</p>
+        <div class="names reveal-up">
+          <span id="groomName" class="name-script">Hatem</span>
+          <span class="ampersand">&amp;</span>
+          <span id="brideName" class="name-script">Nour</span>
+        </div>
+        <p id="heroDate" class="hero__date reveal-up">Saturday · 26 September 2026</p>
+        <a class="hero__scroll" href="#welcome" aria-label="Scroll to invitation">Scroll to discover<span></span></a>
+      </div>
+    </section>
+
+    <section id="welcome" class="section section--paper floral-bg">
+      <div class="section__inner narrow reveal-on-scroll">
+        <span class="ornament">✦</span>
+        <p id="invitationTitle" class="eyebrow eyebrow--dark">WITH JOY IN OUR HEARTS</p>
+        <h1 id="invitationHeading" class="display-title">You are warmly invited</h1>
+        <p id="invitationParagraph" class="lead-copy">Together with our families, we invite you to celebrate the beginning of our forever with an evening filled with love, laughter, and cherished memories.</p>
+        <blockquote id="romanticQuote" class="quote">“Two souls, one heart, one beautiful beginning.”</blockquote>
+        <div class="gold-line"></div>
+      </div>
+    </section>
+
+    <section class="section section--cream" id="couple">
+      <div class="section__inner">
+        <div class="center reveal-on-scroll">
+          <p class="eyebrow eyebrow--dark">THE COUPLE</p>
+          <h2 class="section-title">Two hearts, one story</h2>
+        </div>
+        <div class="couple-gallery">
+          <figure class="portrait reveal-on-scroll"><img id="groomPhoto" src="assets/opening-poster.jpg" alt="Groom portrait" loading="lazy"><figcaption id="groomCaption">Hatem</figcaption></figure>
+          <figure class="portrait portrait--main reveal-on-scroll"><img id="couplePhoto" src="assets/opening-poster.jpg" alt="Couple portrait" loading="lazy"><figcaption>Our forever begins</figcaption></figure>
+          <figure class="portrait reveal-on-scroll"><img id="bridePhoto" src="assets/opening-poster.jpg" alt="Bride portrait" loading="lazy"><figcaption id="brideCaption">Nour</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--save-date" id="save-date">
+      <div class="section__inner narrow center reveal-on-scroll">
+        <p class="eyebrow">SAVE THE DATE</p>
+        <div class="date-medallion">
+          <span id="saveMonth">SEPTEMBER</span>
+          <strong id="saveDay">26</strong>
+          <span id="saveYear">2026</span>
+        </div>
+        <p id="saveDateLabel" class="save-date-label">Saturday, 26 September 2026</p>
+        <button id="calendarButton" class="lux-button" type="button">ADD TO CALENDAR</button>
+      </div>
+    </section>
+
+    <section class="section section--cream" id="details">
+      <div class="section__inner details-grid">
+        <div class="details-copy reveal-on-scroll">
+          <p class="eyebrow eyebrow--dark">THE CELEBRATION</p>
+          <h2 id="venueName" class="section-title">The White Palace</h2>
+          <p id="venueAddress" class="body-copy">A graceful setting for an unforgettable evening.</p>
+          <div class="detail-row">
+            <span class="detail-icon">◷</span>
+            <div><strong id="weddingDateFull">Saturday, 26 September 2026</strong><small id="weddingTime">7:00 PM onwards</small></div>
+          </div>
+          <div class="detail-row">
+            <span class="detail-icon">⌖</span>
+            <div><strong id="venueShort">The White Palace</strong><small>See location for full address</small></div>
+          </div>
+          <a id="mapsButton" class="lux-button lux-button--outline" href="#" target="_blank" rel="noopener">VIEW ON MAP</a>
+        </div>
+        <div class="image-frame reveal-on-scroll">
+          <img id="locationImage" src="assets/opening-poster.jpg" alt="Wedding venue" loading="lazy" />
+          <div class="image-frame__caption">Where our story continues</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--wine" id="timeline">
+      <div class="section__inner">
+        <div class="center reveal-on-scroll">
+          <p class="eyebrow">THE EVENING</p>
+          <h2 class="section-title section-title--light">A night to remember</h2>
+        </div>
+        <div id="timelineList" class="timeline"></div>
+      </div>
+    </section>
+
+    <section class="section section--paper" id="pre-wedding">
+      <div class="section__inner">
+        <div class="center reveal-on-scroll">
+          <p class="eyebrow eyebrow--dark">BEFORE THE I DOs</p>
+          <h2 class="section-title">Pre-Wedding Celebrations</h2>
+        </div>
+        <div id="preWeddingGrid" class="event-grid"></div>
+      </div>
+    </section>
+
+    <section class="section section--cream" id="dress-code">
+      <div class="section__inner two-col">
+        <div class="dress-card reveal-on-scroll">
+          <span class="dress-card__icon">✽</span>
+          <p class="eyebrow eyebrow--dark">FOR HER</p>
+          <h3>Women's Dress Code</h3>
+          <p id="womenDressCode">Elegant formal attire</p>
+        </div>
+        <div class="dress-card reveal-on-scroll">
+          <span class="dress-card__icon">✦</span>
+          <p class="eyebrow eyebrow--dark">FOR HIM</p>
+          <h3>Men's Dress Code</h3>
+          <p id="menDressCode">Classic formal attire</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--wine transport-section" id="transport">
+      <div class="section__inner narrow center reveal-on-scroll">
+        <p class="eyebrow">TRAVEL WITH EASE</p>
+        <h2 class="section-title section-title--light">Transportation</h2>
+        <p id="transportInfo" class="light-copy">Transportation details will be shared by the hosts.</p>
+      </div>
+    </section>
+
+    <section class="section section--paper" id="countdown">
+      <div class="section__inner narrow center reveal-on-scroll">
+        <p id="countdownTitle" class="eyebrow eyebrow--dark">COUNTING DOWN TO FOREVER</p>
+        <h2 class="section-title">Until we celebrate</h2>
+        <div class="countdown" aria-live="polite">
+          <div><span id="days">00</span><small>Days</small></div>
+          <div><span id="hours">00</span><small>Hours</small></div>
+          <div><span id="minutes">00</span><small>Minutes</small></div>
+          <div><span id="seconds">00</span><small>Seconds</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--rsvp" id="rsvp">
+      <div class="section__inner narrow reveal-on-scroll">
+        <div class="center">
+          <p class="eyebrow">KINDLY RESPOND</p>
+          <h2 id="rsvpTitle" class="section-title section-title--light">Will you join us?</h2>
+          <p id="rsvpDescription" class="light-copy">Your presence would make our celebration complete. Please let us know if you can be there.</p>
+        </div>
+        <form id="rsvpForm" class="rsvp-form" novalidate>
+          <label>Guest Name<input name="guestName" type="text" maxlength="120" required autocomplete="name" /></label>
+          <label>Attendance
+            <select name="status" required>
+              <option value="Confirmed">Yes, I’ll be there</option>
+              <option value="Declined">Sadly, I can’t attend</option>
+            </select>
+          </label>
+          <label>Number of Guests<input name="attendees" type="number" min="0" max="20" value="1" required /></label>
+          <label>Message / Notes<textarea name="notes" rows="4" maxlength="500" placeholder="A note for the couple (optional)"></textarea></label>
+          <button class="lux-button lux-button--gold" type="submit"><span id="rsvpSubmitText">SEND RSVP</span></button>
+          <p id="rsvpMessage" class="form-message" role="status"></p>
+        </form>
+      </div>
+    </section>
+
+    <footer class="footer section--wine">
+      <div class="footer__inner">
+        <div class="footer-monogram" id="footerInitials">HN</div>
+        <p id="footerText">With love and gratitude, Hatem &amp; Nour</p>
+        <a href="#home" class="back-top">Back to top ↑</a>
+      </div>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
